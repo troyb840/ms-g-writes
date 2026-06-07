@@ -1,0 +1,40 @@
+{
+  "name": "msgwrites",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "build:cf": "npx @cloudflare/next-on-pages",
+    "deploy": "npm run build:cf && wrangler pages deploy .vercel/output/static --project-name=msgwrites",
+    "cf:preview": "wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+  },
+  "dependencies": {
+    "@portabletext/react": "^3",
+    "@sanity/image-url": "^1",
+    "@sanity/vision": "^3",
+    "framer-motion": "^11",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.0",
+    "next-sanity": "^9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3",
+    "styled-components": "^6"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8",
+    "eslint-config-next": "^15",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5",
+    "wrangler": "^4.95.0"
+  }
+}

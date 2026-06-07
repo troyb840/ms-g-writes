@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cream: #FDF6EE;
+    --coral: #D99985;
+    --olive: #6B703C;
+    --terracotta: #5A3A33;
+    --peach: #E8C6B5;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream text-terracotta font-body text-base;
+    /* Subtle paper grain overlay for warmth — Genicia's "warm paper" feel */
+    background-image: var(--paper-grain-overlay);
+  }
+
+  /* Headings default to Lora + olive for grounded earthiness */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-olive-400;
+    letter-spacing: -0.01em;
+  }
+
+  /* Selection in brand color */
+  ::selection {
+    @apply bg-coral text-cream;
+  }
+
+  /* Focus states — accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-coral;
+  }
+}
+
+@layer components {
+  /* Editorial section wrapper — controls horizontal rhythm */
+  .section-container {
+    @apply mx-auto w-full max-w-7xl px-6 md:px-10 lg:px-16;
+  }
+
+  .section-narrow {
+    @apply mx-auto w-full max-w-3xl px-6 md:px-10;
+  }
+
+  /* Primary button — Desert Coral, the brand's emotional signature */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-pill bg-coral px-7 py-3.5
+           font-body text-sm font-semibold tracking-wide
+           text-cream shadow-warm
+           transition-all duration-300 ease-out
+           hover:bg-coral-400 hover:shadow-warm-lg hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+
+  /* Secondary — olive outline */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-pill border-2 border-olive bg-transparent px-7 py-3
+           font-body text-sm font-semibold tracking-wide
+           text-olive
+           transition-all duration-300 ease-out
+           hover:bg-olive hover:text-cream;
+  }
+
+  /* Quiet text link — for "Learn more" style CTAs */
+  .link-arrow {
+    @apply inline-flex items-center gap-1.5 font-body text-sm font-semibold
+           text-coral-400 transition-colors
+           hover:text-coral-500;
+  }
+  .link-arrow::after {
+    content: "→";
+    @apply transition-transform duration-200;
+  }
+  .link-arrow:hover::after {
+    transform: translateX(4px);
+  }
+
+  /* Card surface — peach tint, soft shadow, the "card" of the design system */
+  .card-warm {
+    @apply rounded-card bg-peach-50 p-6 shadow-warm
+           ring-1 ring-peach-200/40;
+  }
+
+  /* Elevated card — for featured content */
+  .card-elevated {
+    @apply rounded-card bg-cream p-8 shadow-warm-lg
+           ring-1 ring-coral-100;
+  }
+
+  /* Script accent — for taglines and scripture references */
+  .accent-script {
+    @apply font-script text-coral-400;
+  }
+
+  /* Section eyebrow label — small caps style */
+  .eyebrow {
+    @apply font-body text-xs font-bold uppercase tracking-[0.2em] text-olive;
+  }
+
+  /* Editorial pull quote */
+  .pull-quote {
+    @apply font-display text-2xl italic leading-relaxed text-terracotta md:text-3xl;
+  }
+}
+
+@layer utilities {
+  /* Layered tinted panel — Genicia's specific request: cream is NOT a flat fill */
+  .panel-peach {
+    @apply bg-peach-50 ring-1 ring-peach-100;
+  }
+  .panel-cream-warm {
+    background: linear-gradient(180deg, #FDF6EE 0%, #F8EBDA 100%);
+  }
+  .panel-coral-soft {
+    @apply bg-coral-50;
+  }
+
+  /* Decorative section divider — olive */
+  .divider-olive {
+    @apply h-px bg-olive-100;
+  }
+
+  /* Paper grain overlay for warmth */
+  :root {
+    --paper-grain-overlay: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.353 0 0 0 0 0.227 0 0 0 0 0.2 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Reduced motion respect */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
