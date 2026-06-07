@@ -57,7 +57,7 @@ export function Hero({
       <div
         className="
           section-container relative
-          grid grid-cols-1 gap-4 py-section
+          grid grid-cols-1 gap-4 pt-8 pb-section md:pt-12
           md:grid-cols-[5fr_7fr] md:grid-rows-[auto_1fr] md:gap-x-16 md:gap-y-0
         "
       >
