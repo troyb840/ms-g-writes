@@ -35,6 +35,10 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   socials, contactEmail
 }`;
 
+export const layoutSettingsQuery = `*[_type == "siteSettings"][0]{
+  footerScripture, socials
+}`;
+
 export const featuredBookQuery = `*[_type == "book" && featured == true][0]{
   _id, title, subtitle, slug, audience, status, cover,
   shortDescription, buyLinks
