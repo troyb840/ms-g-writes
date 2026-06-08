@@ -76,7 +76,7 @@ export function HeartBehindWriter() {
           {PILLARS.map(({ Icon, filled, eyebrow, body, bg, fg }, i) => (
             <motion.div
               key={eyebrow}
-              className="flex flex-col items-center text-center md:items-start md:text-left"
+              className="flex flex-col items-center text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}

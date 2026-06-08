@@ -55,7 +55,7 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
 
   return (
     <section className="relative bg-peach-100">
-      <div className="section-container pt-section-sm pb-section">
+      <div className="section-container pt-8 pb-section md:pt-12">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-14">
           {/* Cover */}
           <div className="md:col-span-4">
