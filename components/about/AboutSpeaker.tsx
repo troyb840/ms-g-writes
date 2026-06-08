@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Heart, Download, CalendarHeart } from "lucide-react";
+import { assetPath } from "@/lib/assetPath";
 
 type Props = {
   author?: {
@@ -12,7 +13,7 @@ type Props = {
 
 export function AboutSpeaker({ author }: Props) {
   // Fall back to the static file in /public when no Sanity URL is set
-  const pdfUrl = author?.speakerBioPdfUrl ?? "/ms-g-speaker-one-sheet.pdf";
+  const pdfUrl = author?.speakerBioPdfUrl ?? assetPath("/ms-g-speaker-one-sheet.pdf");
 
   return (
     <section className="relative overflow-hidden bg-terracotta-400 py-section-sm text-cream">

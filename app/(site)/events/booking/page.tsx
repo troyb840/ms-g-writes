@@ -2,6 +2,7 @@ import { BookingForm } from "@/components/events/BookingForm";
 import { Heart, CalendarHeart, Download, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { assetPath } from "@/lib/assetPath";
 
 export const metadata = { title: "Book Ms. G · MsGwrites.com" };
 
@@ -49,7 +50,7 @@ export default function BookingPage() {
               {/* Preview thumbnail */}
               <div className="relative w-full overflow-hidden border-b border-coral/10 bg-peach-100">
                 <a
-                  href="/ms-g-speaker-one-sheet.pdf"
+                  href={assetPath("/ms-g-speaker-one-sheet.pdf")}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Preview speaker one-sheet (opens PDF)"
@@ -76,7 +77,7 @@ export default function BookingPage() {
                   </div>
                 </div>
                 <a
-                  href="/ms-g-speaker-one-sheet.pdf"
+                  href={assetPath("/ms-g-speaker-one-sheet.pdf")}
                   download
                   className="btn-primary shrink-0 py-2 text-xs"
                 >
