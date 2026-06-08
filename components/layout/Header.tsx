@@ -80,7 +80,7 @@ export function Header({ socials }: HeaderProps) {
             href="/"
             className="inline-flex items-center gap-2 font-script text-3xl leading-none text-terracotta transition-colors hover:text-coral-500"
           >
-            Ms. G.
+            Ms. G. Writes
             <Heart
               aria-hidden
               size={11}

@@ -23,7 +23,7 @@ const DEFAULT_INTRO = [
 ];
 
 export function Hero({
-  publicName = "Ms. G",
+  publicName = "Ms. G!",
   legalName = "Genicia Corney",
   tagline = "Stories That Point Little Hearts to Jesus",
   photo,

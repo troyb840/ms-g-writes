@@ -52,9 +52,9 @@ export function EventsTeaser() {
             {ENGAGEMENT_TYPES.map((type) => (
               <span
                 key={type}
-                className="inline-flex items-center gap-2 rounded-pill bg-cream px-4 py-2 text-sm text-terracotta/70 shadow-warm ring-1 ring-terracotta/8"
+                className="inline-flex cursor-default items-center gap-2 rounded-pill bg-cream px-4 py-2 text-sm text-terracotta/70 shadow-warm ring-1 ring-terracotta/8 transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral hover:text-cream hover:shadow-warm-lg hover:ring-coral"
               >
-                <MapPin size={11} className="text-coral" />
+                <MapPin size={11} className="text-current opacity-70" />
                 {type}
               </span>
             ))}
