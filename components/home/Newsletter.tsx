@@ -21,6 +21,11 @@ export function Newsletter({ intro, convertKitFormId }: NewsletterProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(false);
+    // Static/GitHub Pages preview — no API routes available, mock success
+    if (process.env.NEXT_PUBLIC_GITHUB_PAGES === "1") {
+      setSubmitted(true);
+      return;
+    }
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",

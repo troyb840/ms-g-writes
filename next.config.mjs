@@ -5,9 +5,18 @@ if (process.env.NODE_ENV === "development") {
   await setupDevPlatform();
 }
 
+const isGithubPages = process.env.GITHUB_PAGES === "1";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Static export for GitHub Pages preview; omit for Vercel/Cloudflare
+  ...(isGithubPages && {
+    output: "export",
+    basePath: "/ms-g-writes",
+  }),
   images: {
+    // Next.js Image Optimization requires a server; disable for static builds
+    unoptimized: isGithubPages,
     remotePatterns: [
       {
         protocol: "https",
