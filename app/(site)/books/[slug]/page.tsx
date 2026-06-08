@@ -1,11 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { Heart, ShoppingBag, ChevronLeft } from "lucide-react";
-import { RichText } from "@/components/shared/RichText";
-import { BookBuyLinks } from "@/components/books/BookBuyLinks";
-import { BookSamples } from "@/components/books/BookSamples";
-import { LinkedResources } from "@/components/books/LinkedResources";
+import { Heart, ChevronLeft } from "lucide-react";
 
 export function generateStaticParams() {
   return [{ slug: "a-home-to-call-their-own" }];
@@ -89,27 +84,12 @@ export default async function BookDetailPage({
                 {/* Offset shadow */}
                 <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-card bg-peach-200" />
                 <div className="relative aspect-[3/4] overflow-hidden rounded-card bg-peach-100">
-                  {coverUrl ? (
-                    <Image
-                      src={coverUrl}
-                      alt={displayBook.title}
-                      fill
-                      priority
-                      className="object-cover"
-                      sizes="(min-width: 768px) 33vw, 80vw"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
-                      <Heart
-                        size={40}
-                        fill="currentColor"
-                        className="text-coral-300/50"
-                      />
-                      <p className="font-display text-sm italic text-terracotta/50">
-                        Cover Coming Soon
-                      </p>
-                    </div>
-                  )}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
+                    <Heart size={40} fill="currentColor" className="text-coral-300/50" />
+                    <p className="font-display text-sm italic text-terracotta/50">
+                      Cover Coming Soon
+                    </p>
+                  </div>
                   {/* Status badge */}
                   <div className="absolute left-3 top-3">
                     <span
@@ -142,20 +122,16 @@ export default async function BookDetailPage({
                 {displayBook.shortDescription}
               </p>
 
-              {/* Buy links */}
-              {displayBook.buyLinks && displayBook.buyLinks.length > 0 ? (
-                <BookBuyLinks links={displayBook.buyLinks} />
-              ) : (
-                <div className="mt-8">
-                  <p className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-terracotta/50">
-                    Where to Buy
-                  </p>
-                  <div className="inline-flex items-center gap-2 rounded-pill border border-terracotta/20 px-5 py-2.5 text-sm text-terracotta/40">
-                    <Heart size={12} fill="currentColor" className="text-coral-200" />
-                    Buy links coming soon
-                  </div>
+              {/* Buy links — coming soon */}
+              <div className="mt-8">
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-terracotta/50">
+                  Where to Buy
+                </p>
+                <div className="inline-flex items-center gap-2 rounded-pill border border-terracotta/20 px-5 py-2.5 text-sm text-terracotta/40">
+                  <Heart size={12} fill="currentColor" className="text-coral-200" />
+                  Buy links coming soon
                 </div>
-              )}
+              </div>
 
               {/* Newsletter nudge */}
               <p className="mt-8 text-sm text-terracotta/55">
@@ -172,28 +148,6 @@ export default async function BookDetailPage({
         </div>
       </section>
 
-      {/* Full description */}
-      {displayBook.fullDescription && (
-        <section className="panel-cream-warm py-section-sm">
-          <div className="section-narrow">
-            <div className="mb-8 flex items-center gap-3">
-              <Heart size={12} fill="currentColor" className="text-coral" />
-              <p className="eyebrow">About the Book</p>
-            </div>
-            <RichText value={displayBook.fullDescription} />
-          </div>
-        </section>
-      )}
-
-      {/* Sample pages */}
-      {displayBook.samplePages && displayBook.samplePages.length > 0 && (
-        <BookSamples pages={displayBook.samplePages} title={displayBook.title} />
-      )}
-
-      {/* Linked resources */}
-      {displayBook.linkedResources && displayBook.linkedResources.length > 0 && (
-        <LinkedResources resources={displayBook.linkedResources} />
-      )}
 
       {/* Bottom CTA */}
       <section className="panel-peach py-16 text-center">
