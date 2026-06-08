@@ -2,18 +2,22 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-01-01";
 
-export const sanityClient = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: true,
-});
+// When NEXT_PUBLIC_SANITY_PROJECT_ID is not set (e.g. GitHub Pages preview build),
+// use a stub client that returns null for every query so pages fall back to
+// their placeholder content instead of crashing at build time.
+export const sanityClient = projectId
+  ? createClient({ projectId, dataset, apiVersion, useCdn: true })
+  : ({ fetch: async () => null } as ReturnType<typeof createClient>);
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = imageUrlBuilder(
+  projectId
+    ? (sanityClient as ReturnType<typeof createClient>)
+    : createClient({ projectId: "placeholder", dataset, apiVersion, useCdn: false })
+);
 
 export function urlFor(source: SanityImageSource) {
   return builder.image(source);

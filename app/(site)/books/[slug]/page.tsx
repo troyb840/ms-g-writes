@@ -11,18 +11,28 @@ import { LinkedResources } from "@/components/books/LinkedResources";
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const books = await sanityClient.fetch(allBooksQuery);
-  return (books ?? []).map((b: any) => ({ slug: b.slug }));
+  try {
+    const books = await sanityClient.fetch(allBooksQuery);
+    return (books ?? []).map((b: any) => ({ slug: b.slug }));
+  } catch {
+    // Sanity not configured at build time (e.g. GitHub Pages preview).
+    // Pre-render the debut book placeholder so the route still exists.
+    return [{ slug: "a-home-to-call-their-own" }];
+  }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const book = await sanityClient.fetch(bookBySlugQuery, { slug });
-  if (!book) return {};
-  return {
-    title: `${book.title} · MsGwrites.com`,
-    description: book.shortDescription,
-  };
+  try {
+    const book = await sanityClient.fetch(bookBySlugQuery, { slug });
+    if (!book) return {};
+    return {
+      title: `${book.title} · MsGwrites.com`,
+      description: book.shortDescription,
+    };
+  } catch {
+    return {};
+  }
 }
 
 const AUDIENCE_LABELS: Record<string, string> = {
@@ -44,7 +54,12 @@ export default async function BookDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const book = await sanityClient.fetch(bookBySlugQuery, { slug });
+  let book: any = null;
+  try {
+    book = await sanityClient.fetch(bookBySlugQuery, { slug });
+  } catch {
+    // Sanity not configured — fall through to placeholder logic below
+  }
 
   // If not in Sanity yet, show placeholder for the known debut book
   const isPlaceholder = !book && slug === "a-home-to-call-their-own";
