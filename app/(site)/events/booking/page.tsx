@@ -65,13 +65,13 @@ export default function BookingPage() {
                   />
                 </a>
 
-                {/* Download button — overlaid top-right, matching the blank header space */}
+                {/* Download button — centered in the blank right half of the header band (~top 13% of image) */}
                 <a
                   href={assetPath("/ms-g-speaker-one-sheet.pdf")}
                   download
-                  className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-pill bg-coral px-5 py-2.5 font-body text-xs font-semibold uppercase tracking-[0.15em] text-cream shadow-warm transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-400 hover:shadow-warm-lg sm:right-6 sm:top-6"
+                  className="absolute right-[5%] top-[3.5%] inline-flex items-center gap-2.5 rounded-pill border-2 border-cream/80 bg-coral px-7 py-3.5 font-body text-sm font-semibold uppercase tracking-[0.15em] text-cream shadow-warm-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-400"
                 >
-                  <Download size={13} />
+                  <Download size={15} />
                   Download PDF
                 </a>
               </div>
