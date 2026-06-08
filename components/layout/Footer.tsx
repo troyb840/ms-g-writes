@@ -27,6 +27,8 @@ const EXPLORE = [
   { href: "/shop", label: "Shop" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export function Footer({ socials, footerScripture }: FooterProps) {
@@ -141,22 +143,8 @@ export function Footer({ socials, footerScripture }: FooterProps) {
         )}
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 text-xs text-cream/60 sm:flex-row">
+        <div className="mt-12 border-t border-cream/15 pt-6 text-center text-xs text-cream/60">
           <p>© {year} Genicia Corney / MsGwrites.com. All Rights Reserved.</p>
-          <div className="flex items-center gap-5">
-            <Link
-              href="/privacy"
-              className="transition-colors hover:text-coral-200"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/terms"
-              className="transition-colors hover:text-coral-200"
-            >
-              Terms
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

@@ -44,7 +44,7 @@ export function QuoteCallout({
 
       <div className="section-narrow relative py-section-sm text-center">
         <motion.p
-          className="font-script text-3xl leading-snug text-terracotta sm:text-4xl md:text-5xl"
+          className="text-balance font-script text-3xl leading-snug text-terracotta sm:text-4xl md:text-5xl"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
