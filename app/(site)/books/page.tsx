@@ -1,8 +1,6 @@
 import { Heart, BookOpen } from "lucide-react";
-import { sanityClient, allBooksQuery } from "@/lib/sanity";
 import { BooksGrid } from "@/components/books/BooksGrid";
 
-export const revalidate = 60;
 export const metadata = {
   title: "Books",
   description:
@@ -14,9 +12,7 @@ export const metadata = {
   },
 };
 
-export default async function BooksPage() {
-  const books = await sanityClient.fetch(allBooksQuery);
-
+export default function BooksPage() {
   return (
     <main>
       {/* Page hero */}
@@ -37,10 +33,10 @@ export default async function BooksPage() {
         </div>
       </section>
 
-      {/* Book grid with audience filter */}
+      {/* Book grid — shows placeholder cards */}
       <section className="py-section">
         <div className="section-container">
-          <BooksGrid books={books ?? []} />
+          <BooksGrid books={[]} />
         </div>
       </section>
 

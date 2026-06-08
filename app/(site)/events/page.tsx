@@ -1,20 +1,9 @@
 import Link from "next/link";
 import { Heart, CalendarHeart } from "lucide-react";
-import { sanityClient, upcomingEventsQuery, pastEventsQuery } from "@/lib/sanity";
-import { EventCard } from "@/components/events/EventCard";
 
-export const revalidate = 60;
 export const metadata = { title: "Events · MsGwrites.com" };
 
-export default async function EventsPage() {
-  const [upcoming, past] = await Promise.all([
-    sanityClient.fetch(upcomingEventsQuery),
-    sanityClient.fetch(pastEventsQuery),
-  ]);
-
-  const hasUpcoming = upcoming && upcoming.length > 0;
-  const hasPast = past && past.length > 0;
-
+export default function EventsPage() {
   return (
     <main>
       {/* Page hero */}
@@ -41,7 +30,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      {/* Upcoming events */}
+      {/* Upcoming events — empty state */}
       <section className="py-section">
         <div className="section-container">
           <div className="mb-10 flex items-center gap-3">
@@ -49,52 +38,22 @@ export default async function EventsPage() {
             <p className="eyebrow">Upcoming</p>
           </div>
 
-          {hasUpcoming ? (
-            <div className="grid gap-8 md:grid-cols-2">
-              {upcoming.map((event: any) => (
-                <EventCard key={event._id} event={event} variant="upcoming" />
-              ))}
-            </div>
-          ) : (
-            /* Beautiful empty state */
-            <div className="card-warm py-16 text-center">
-              <Heart
-                size={36}
-                fill="currentColor"
-                className="mx-auto text-coral-300/40"
-              />
-              <h2 className="mt-4 font-display text-xl text-olive">
-                No events scheduled yet
-              </h2>
-              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-terracotta/65">
-                The calendar is being planned — check back soon! In the
-                meantime, you're welcome to invite Ms. G to your community.
-              </p>
-              <Link href="/events/booking" className="btn-primary mt-6 inline-flex">
-                <CalendarHeart size={14} />
-                Send a booking inquiry
-              </Link>
-            </div>
-          )}
+          <div className="card-warm py-16 text-center">
+            <Heart size={36} fill="currentColor" className="mx-auto text-coral-300/40" />
+            <h2 className="mt-4 font-display text-xl text-olive">
+              No events scheduled yet
+            </h2>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-terracotta/65">
+              The calendar is being planned — check back soon! In the
+              meantime, you're welcome to invite Ms. G to your community.
+            </p>
+            <Link href="/events/booking" className="btn-primary mt-6 inline-flex">
+              <CalendarHeart size={14} />
+              Send a booking inquiry
+            </Link>
+          </div>
         </div>
       </section>
-
-      {/* Past events archive */}
-      {hasPast && (
-        <section className="panel-cream-warm py-section-sm">
-          <div className="section-container">
-            <div className="mb-8 flex items-center gap-3">
-              <Heart size={12} fill="currentColor" className="text-coral" />
-              <p className="eyebrow">Past Events</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {past.map((event: any) => (
-                <EventCard key={event._id} event={event} variant="past" />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Bring Genicia to your community */}
       <section className="panel-cream-warm py-section">

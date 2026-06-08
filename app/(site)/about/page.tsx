@@ -1,10 +1,8 @@
-import { sanityClient, authorQuery } from "@/lib/sanity";
 import { AboutHero } from "@/components/about/AboutHero";
 import { AboutBio } from "@/components/about/AboutBio";
 import { AboutPillars } from "@/components/about/AboutPillars";
 import { AboutSpeaker } from "@/components/about/AboutSpeaker";
 
-export const revalidate = 60;
 export const metadata = {
   title: "About Ms. G",
   description:
@@ -16,15 +14,13 @@ export const metadata = {
   },
 };
 
-export default async function AboutPage() {
-  const author = await sanityClient.fetch(authorQuery);
-
+export default function AboutPage() {
   return (
     <main>
-      <AboutHero author={author} />
-      <AboutBio author={author} />
+      <AboutHero />
+      <AboutBio />
       <AboutPillars />
-      <AboutSpeaker author={author} />
+      <AboutSpeaker />
     </main>
   );
 }

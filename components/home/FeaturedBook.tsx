@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart, BookOpen } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 
 type BuyLink = { retailer?: string; url?: string };
 
@@ -44,10 +43,8 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
   const effectiveBook = book ?? PLACEHOLDER_BOOK;
   const isPlaceholder = !book;
 
-  const hasRealCover = !!effectiveBook.cover;
-  const coverUrl = hasRealCover
-    ? urlFor(effectiveBook.cover).width(800).height(1100).fit("crop").url()
-    : null;
+  const hasRealCover = false;
+  const coverUrl = null;
 
   const eyebrow = effectiveBook.status
     ? STATUS_EYEBROW[effectiveBook.status]

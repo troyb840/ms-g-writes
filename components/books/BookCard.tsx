@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 
 export type BookCardData = {
   _id: string;
@@ -57,9 +56,7 @@ type Props = {
 };
 
 export function BookCard({ book }: Props) {
-  const coverUrl = book.cover
-    ? urlFor(book.cover).width(600).height(800).fit("crop").url()
-    : null;
+  const coverUrl = null; // populated when image data is available
 
   const statusCfg = STATUS_CONFIG[book.status] ?? STATUS_CONFIG["coming-soon"];
   const audienceLabel = AUDIENCE_LABELS[book.audience] ?? book.audience;

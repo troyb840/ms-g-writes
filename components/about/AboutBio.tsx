@@ -3,54 +3,37 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 import { RichText } from "@/components/shared/RichText";
-import type { PortableTextBlock } from "@portabletext/types";
 
 const FALLBACK_PORTRAIT = "/genicia.jpg";
 
-const FALLBACK_BIO: PortableTextBlock[] = [
+const FALLBACK_BIO = [
   {
     _type: "block",
-    _key: "a",
     style: "normal",
     children: [
       {
-        _type: "span",
-        _key: "a1",
         text: "Hi, I'm Genicia — but the kids know me as Ms. G. I'm a first-time author, a speaker, and most importantly a Kingdom builder who believes every child deserves a story that points their heart toward Jesus.",
-        marks: [],
       },
     ],
-    markDefs: [],
   },
   {
     _type: "block",
-    _key: "b",
     style: "normal",
     children: [
       {
-        _type: "span",
-        _key: "b1",
         text: "My debut children's book, A Home to Call Their Own, was born from a place of deep faith — the kind that grows quietly in the middle of uncertainty and blooms into something beautiful. I wanted to give children a story they could hold onto when the world felt unsettled.",
-        marks: [],
       },
     ],
-    markDefs: [],
   },
   {
     _type: "block",
-    _key: "c",
     style: "normal",
     children: [
       {
-        _type: "span",
-        _key: "c1",
         text: "When I'm not writing, you'll find me speaking to classrooms, churches, and community gatherings — sharing stories that spark imagination and remind both children and adults that they are seen, loved, and never alone.",
-        marks: [],
       },
     ],
-    markDefs: [],
   },
 ];
 
@@ -59,20 +42,15 @@ type Props = {
     legalName?: string;
     publicName?: string;
     photo?: any;
-    fullBio?: PortableTextBlock[];
+    fullBio?: any[];
     shortIntro?: string;
   } | null;
 };
 
 export function AboutBio({ author }: Props) {
   const legalName = author?.legalName ?? "Genicia Corney";
-  const photoUrl = author?.photo
-    ? urlFor(author.photo).width(900).height(1100).fit("crop").url()
-    : FALLBACK_PORTRAIT;
-  const bio =
-    author?.fullBio && author.fullBio.length > 0
-      ? author.fullBio
-      : FALLBACK_BIO;
+  const photoUrl = FALLBACK_PORTRAIT;
+  const bio = author?.fullBio?.length ? author.fullBio : FALLBACK_BIO;
 
   return (
     <section className="relative py-section">
@@ -86,7 +64,6 @@ export function AboutBio({ author }: Props) {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            {/* Offset warm card frame */}
             <div className="relative mx-auto max-w-sm">
               {/* Shadow card — offset bottom-right */}
               <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-card bg-peach-200" />

@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 
 type HeroProps = {
   publicName?: string;
@@ -29,10 +28,7 @@ export function Hero({
   photo,
   shortIntro,
 }: HeroProps) {
-  const hasSanityPhoto = !!photo;
-  const photoUrl = hasSanityPhoto
-    ? urlFor(photo).width(1200).height(1500).fit("crop").url()
-    : FALLBACK_PORTRAIT;
+  const photoUrl = FALLBACK_PORTRAIT;
 
   const paragraphs = shortIntro
     ? shortIntro

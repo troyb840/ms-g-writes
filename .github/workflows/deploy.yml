@@ -37,8 +37,6 @@ jobs:
         run: |
           rm -rf app/api
           rm -f app/opengraph-image.tsx
-          rm -f app/robots.ts
-          rm -f app/sitemap.ts
 
       - name: Build static export
         run: npm run build

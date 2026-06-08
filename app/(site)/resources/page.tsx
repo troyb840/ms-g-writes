@@ -1,10 +1,8 @@
 import { Heart } from "lucide-react";
 import Link from "next/link";
-import { sanityClient, allResourcesQuery } from "@/lib/sanity";
 import { ResourceGroup } from "@/components/resources/ResourceGroup";
 import { GROUPS } from "@/components/resources/groups";
 
-export const revalidate = 60;
 export const metadata = {
   title: "Free Resources",
   description:
@@ -16,10 +14,7 @@ export const metadata = {
   },
 };
 
-export default async function ResourcesPage() {
-  const resources = await sanityClient.fetch(allResourcesQuery);
-  const all = resources ?? [];
-
+export default function ResourcesPage() {
   return (
     <main>
       {/* Page hero */}
@@ -45,20 +40,17 @@ export default async function ResourcesPage() {
         </div>
       </section>
 
-      {/* Resource groups */}
+      {/* Resource groups — all use placeholder cards */}
       <section className="py-section">
         <div className="section-container space-y-20">
-          {GROUPS.map((group, i) => {
-            const groupResources = all.filter((r: any) => r.group === group.slug);
-            return (
-              <ResourceGroup
-                key={group.slug}
-                config={group}
-                resources={groupResources}
-                index={i}
-              />
-            );
-          })}
+          {GROUPS.map((group, i) => (
+            <ResourceGroup
+              key={group.slug}
+              config={group}
+              resources={[]}
+              index={i}
+            />
+          ))}
         </div>
       </section>
 

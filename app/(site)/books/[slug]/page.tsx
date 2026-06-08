@@ -2,37 +2,24 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, ShoppingBag, ChevronLeft } from "lucide-react";
-import { sanityClient, bookBySlugQuery, allBooksQuery, urlFor } from "@/lib/sanity";
 import { RichText } from "@/components/shared/RichText";
 import { BookBuyLinks } from "@/components/books/BookBuyLinks";
 import { BookSamples } from "@/components/books/BookSamples";
 import { LinkedResources } from "@/components/books/LinkedResources";
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  try {
-    const books = await sanityClient.fetch(allBooksQuery);
-    return (books ?? []).map((b: any) => ({ slug: b.slug }));
-  } catch {
-    // Sanity not configured at build time (e.g. GitHub Pages preview).
-    // Pre-render the debut book placeholder so the route still exists.
-    return [{ slug: "a-home-to-call-their-own" }];
-  }
+export function generateStaticParams() {
+  return [{ slug: "a-home-to-call-their-own" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  try {
-    const book = await sanityClient.fetch(bookBySlugQuery, { slug });
-    if (!book) return {};
+  if (slug === "a-home-to-call-their-own") {
     return {
-      title: `${book.title} · MsGwrites.com`,
-      description: book.shortDescription,
+      title: "A Home to Call Their Own · MsGwrites.com",
+      description: "A picture book about a child finding shelter and trust in places that don't always look like home.",
     };
-  } catch {
-    return {};
   }
+  return {};
 }
 
 const AUDIENCE_LABELS: Record<string, string> = {
@@ -54,23 +41,15 @@ export default async function BookDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let book: any = null;
-  try {
-    book = await sanityClient.fetch(bookBySlugQuery, { slug });
-  } catch {
-    // Sanity not configured — fall through to placeholder logic below
-  }
 
-  // If not in Sanity yet, show placeholder for the known debut book
-  const isPlaceholder = !book && slug === "a-home-to-call-their-own";
-  if (!book && !isPlaceholder) notFound();
+  // Only the debut book page is pre-rendered; everything else 404s until data is added
+  if (slug !== "a-home-to-call-their-own") notFound();
 
-  const displayBook = book ?? {
+  const displayBook = {
     title: "A Home to Call Their Own",
     subtitle: "A Tale of Trusting God",
     audience: "children-6-8",
     status: "coming-soon",
-    cover: null,
     shortDescription:
       "A picture book about a child finding shelter and trust in places that don't always look like home.",
     fullDescription: null,
@@ -79,9 +58,7 @@ export default async function BookDetailPage({
     linkedResources: null,
   };
 
-  const coverUrl = displayBook.cover
-    ? urlFor(displayBook.cover).width(800).height(1067).fit("crop").url()
-    : null;
+  const coverUrl = null;
 
   const statusCfg =
     STATUS_CONFIG[displayBook.status as keyof typeof STATUS_CONFIG] ??

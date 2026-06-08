@@ -1,13 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Heart, ChevronLeft } from "lucide-react";
-import { sanityClient, resourcesByGroupQuery } from "@/lib/sanity";
 import { ResourceCard } from "@/components/resources/ResourceCard";
 import { GROUPS } from "@/components/resources/groups";
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return GROUPS.map((g) => ({ group: g.slug }));
 }
 
@@ -27,10 +24,8 @@ export default async function ResourceGroupPage({
   const config = GROUPS.find((g) => g.slug === group);
   if (!config) notFound();
 
-  const resources = await sanityClient.fetch(resourcesByGroupQuery, {
-    group,
-  });
-  const displayItems = resources?.length > 0 ? resources : config.placeholders;
+  // Use placeholder cards until real resources are added
+  const displayItems = config.placeholders;
 
   return (
     <main>

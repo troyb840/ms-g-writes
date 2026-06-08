@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Heart, Download, Clock } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 
 export type ResourceCardData = {
   _id: string;
@@ -20,9 +19,7 @@ export type ResourceCardData = {
 type Props = { resource: ResourceCardData };
 
 export function ResourceCard({ resource }: Props) {
-  const thumbUrl = resource.thumbnail
-    ? urlFor(resource.thumbnail).width(480).height(320).fit("crop").url()
-    : null;
+  const thumbUrl = null; // populated when thumbnail data is available
 
   return (
     <article className="card-warm group flex flex-col overflow-hidden">

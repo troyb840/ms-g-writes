@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, MapPin, Monitor, Layers, Calendar } from "lucide-react";
-import { urlFor } from "@/lib/sanity";
 
 export type EventCardData = {
   _id: string;
@@ -56,9 +55,7 @@ type Props = {
 
 export function EventCard({ event, variant = "upcoming" }: Props) {
   const FormatIcon = FORMAT_ICONS[event.format] ?? MapPin;
-  const imageUrl = event.image
-    ? urlFor(event.image).width(600).height(340).fit("crop").url()
-    : null;
+  const imageUrl = null; // populated when image data is available
 
   if (variant === "past") {
     return (
