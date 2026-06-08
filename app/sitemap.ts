@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { sanityClient, allBooksQuery } from "@/lib/sanity";
 import { GROUPS } from "@/components/resources/groups";
 
+export const dynamic = "force-static";
+
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://msgwrites.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
