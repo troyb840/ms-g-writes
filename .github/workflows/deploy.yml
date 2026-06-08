@@ -31,12 +31,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # API routes and edge-runtime OG image can't be statically exported.
-      # Remove them for the preview build only — local dev is unaffected.
+      # These files can't be statically exported — remove for preview build only.
+      # Local dev and Cloudflare/Vercel production builds are unaffected.
       - name: Remove server-only files for static export
         run: |
           rm -rf app/api
           rm -f app/opengraph-image.tsx
+          rm -f app/robots.ts
+          rm -f app/sitemap.ts
 
       - name: Build static export
         run: npm run build
