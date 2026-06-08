@@ -1,29 +1,28 @@
-import { createClient } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+// Sanity CMS integration — pending setup.
+// All fetches return null so every page falls back to its built-in
+// placeholder content. Swap this file for the real client when ready.
 
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-01-01";
+export const projectId = "";
+export const dataset = "production";
+export const apiVersion = "2025-01-01";
 
-// When NEXT_PUBLIC_SANITY_PROJECT_ID is not set (e.g. GitHub Pages preview build),
-// use a stub client that returns null for every query so pages fall back to
-// their placeholder content instead of crashing at build time.
-export const sanityClient = projectId
-  ? createClient({ projectId, dataset, apiVersion, useCdn: true })
-  : ({ fetch: async () => null } as ReturnType<typeof createClient>);
+export const sanityClient = {
+  fetch: async () => null,
+} as any;
 
-const builder = imageUrlBuilder(
-  projectId
-    ? (sanityClient as ReturnType<typeof createClient>)
-    : createClient({ projectId: "placeholder", dataset, apiVersion, useCdn: false })
-);
-
-export function urlFor(source: SanityImageSource) {
-  return builder.image(source);
+export function urlFor(_source: any) {
+  // No-op image builder — returns an empty string for every chain.
+  const stub: any = new Proxy(
+    {},
+    {
+      get: () => () => stub,
+    }
+  );
+  stub.url = () => "";
+  return stub;
 }
 
-// ---------- Reusable GROQ queries ----------
+// ── GROQ queries (kept for when Sanity is wired up) ──────────────────────────
 
 export const authorQuery = `*[_type == "author"][0]{
   publicName, legalName, tagline, headline,
@@ -43,69 +42,47 @@ export const featuredBookQuery = `*[_type == "book" && featured == true][0]{
 
 export const allBooksQuery = `*[_type == "book"] | order(publishDate desc){
   _id, title, subtitle, "slug": slug.current, audience, status, cover,
-  shortDescription, publishDate
+  shortDescription, buyLinks, publishDate
 }`;
 
 export const bookBySlugQuery = `*[_type == "book" && slug.current == $slug][0]{
-  _id, title, subtitle, audience, status, cover,
+  _id, title, subtitle, "slug": slug.current, audience, status, cover,
   shortDescription, fullDescription, samplePages, buyLinks,
   "linkedResources": linkedResources[]->{
-    _id, title, "slug": slug.current, category, group, description, thumbnail,
-    "hasFile": defined(downloadFile)
+    _id, title, "slug": slug.current, group, description, thumbnail,
+    ageRange, "downloadUrl": downloadFile.asset->url
   }
 }`;
 
-export const upcomingEventsQuery = `*[_type == "event" && startDateTime >= now()] | order(startDateTime asc){
-  _id, title, "slug": slug.current,
-  startDateTime, endDateTime, format, eventType,
-  venueName, location, description, rsvpUrl, image
+export const upcomingEventsQuery = `*[_type == "event" && startDateTime > now()] | order(startDateTime asc){
+  _id, title, "slug": slug.current, startDateTime, endDateTime,
+  format, eventType, venueName, location, description, rsvpUrl, image
 }`;
 
-export const pastEventsQuery = `*[_type == "event" && startDateTime < now()] | order(startDateTime desc){
-  _id, title, "slug": slug.current,
-  startDateTime, format, venueName, location, image
+export const pastEventsQuery = `*[_type == "event" && startDateTime <= now()] | order(startDateTime desc){
+  _id, title, "slug": slug.current, startDateTime,
+  format, eventType, venueName, location
 }`;
 
-export const allResourcesQuery = `*[_type == "resource"] | order(group asc, title asc){
-  _id, title, "slug": slug.current,
-  category, group, description, thumbnail, ageRange,
-  "downloadUrl": downloadFile.asset->url,
-  "hasFile": defined(downloadFile)
+export const allResourcesQuery = `*[_type == "resource"] | order(title asc){
+  _id, title, "slug": slug.current, group, category, description,
+  thumbnail, ageRange, "downloadUrl": downloadFile.asset->url, featured
 }`;
 
 export const resourcesByGroupQuery = `*[_type == "resource" && group == $group] | order(title asc){
-  _id, title, "slug": slug.current,
-  category, description, thumbnail, ageRange,
-  "downloadUrl": downloadFile.asset->url,
-  "hasFile": defined(downloadFile)
+  _id, title, "slug": slug.current, group, category, description,
+  thumbnail, ageRange, "downloadUrl": downloadFile.asset->url
 }`;
 
-// Lean fetch for the root layout (Header + Footer)
-export const layoutSettingsQuery = `*[_type == "siteSettings"][0]{
-  footerScripture, socials
-}`;
-
-// Single combined fetch for the homepage — one round trip
 export const homePageQuery = `{
   "author": *[_type == "author"][0]{
-    publicName, legalName, tagline, headline,
-    photo, shortIntro
+    publicName, legalName, tagline, photo, shortIntro
   },
   "featuredBook": *[_type == "book" && featured == true][0]{
     _id, title, subtitle, "slug": slug.current, audience, status, cover,
     shortDescription, buyLinks
   },
-  "featuredResources": *[_type == "resource" && featured == true] | order(group asc, title asc) [0...3]{
-    _id, title, "slug": slug.current, category, group, description, thumbnail,
-    "hasFile": defined(downloadFile),
-    "downloadUrl": downloadFile.asset->url
-  },
-  "upcomingEvents": *[_type == "event" && startDateTime >= now()] | order(startDateTime asc) [0...3]{
-    _id, title, "slug": slug.current,
-    startDateTime, format, eventType,
-    venueName, location, rsvpUrl
-  },
   "settings": *[_type == "siteSettings"][0]{
-    newsletterIntro, convertKitFormId
+    newsletterIntro, convertKitFormId, socials, footerScripture
   }
 }`;

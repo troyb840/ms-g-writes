@@ -36,7 +36,6 @@ jobs:
       - name: Remove server-only files for static export
         run: |
           rm -rf app/api
-          rm -rf app/studio
           rm -f app/opengraph-image.tsx
           rm -f app/robots.ts
           rm -f app/sitemap.ts

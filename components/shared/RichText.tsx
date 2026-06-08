@@ -1,68 +1,47 @@
-import { PortableText } from "@portabletext/react";
-import type { PortableTextBlock } from "@portabletext/types";
+// Lightweight rich-text renderer — no Sanity/PortableText dependency.
+// Accepts the PortableText block array shape so it's a drop-in replacement
+// when Sanity is wired up later.
 
-const components = {
-  block: {
-    normal: ({ children }: any) => (
-      <p className="text-base leading-relaxed text-terracotta/85 md:text-lg">
-        {children}
-      </p>
-    ),
-    h2: ({ children }: any) => (
-      <h2 className="font-display text-2xl text-olive md:text-3xl">{children}</h2>
-    ),
-    h3: ({ children }: any) => (
-      <h3 className="font-display text-xl text-olive md:text-2xl">{children}</h3>
-    ),
-    blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-coral pl-5 font-display text-xl italic text-terracotta/70">
-        {children}
-      </blockquote>
-    ),
-  },
-  marks: {
-    strong: ({ children }: any) => (
-      <strong className="font-semibold text-terracotta">{children}</strong>
-    ),
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-    link: ({ value, children }: any) => (
-      <a
-        href={value?.href}
-        target={value?.blank ? "_blank" : undefined}
-        rel={value?.blank ? "noopener noreferrer" : undefined}
-        className="text-coral underline underline-offset-2 transition-colors hover:text-coral-400"
-      >
-        {children}
-      </a>
-    ),
-  },
-  list: {
-    bullet: ({ children }: any) => (
-      <ul className="ml-5 list-disc space-y-1.5 text-base leading-relaxed text-terracotta/85">
-        {children}
-      </ul>
-    ),
-    number: ({ children }: any) => (
-      <ol className="ml-5 list-decimal space-y-1.5 text-base leading-relaxed text-terracotta/85">
-        {children}
-      </ol>
-    ),
-  },
-  listItem: {
-    bullet: ({ children }: any) => <li>{children}</li>,
-    number: ({ children }: any) => <li>{children}</li>,
-  },
+type Block = {
+  _type?: string;
+  style?: string;
+  children?: Array<{ text?: string; marks?: string[] }>;
 };
 
 type Props = {
-  value: PortableTextBlock[];
+  value: Block[] | null | undefined;
   className?: string;
 };
 
+function renderChildren(children: Block["children"]) {
+  return (children ?? []).map((span, i) => {
+    const text = span.text ?? "";
+    const marks = span.marks ?? [];
+    let node: React.ReactNode = text;
+    if (marks.includes("strong")) node = <strong key={i} className="font-semibold text-terracotta">{node}</strong>;
+    if (marks.includes("em")) node = <em key={i} className="italic">{node}</em>;
+    return node;
+  });
+}
+
 export function RichText({ value, className }: Props) {
+  if (!value?.length) return null;
+
   return (
     <div className={`space-y-5 ${className ?? ""}`}>
-      <PortableText value={value} components={components} />
+      {value.map((block, i) => {
+        const children = renderChildren(block.children);
+        switch (block.style) {
+          case "h2":
+            return <h2 key={i} className="font-display text-2xl text-olive md:text-3xl">{children}</h2>;
+          case "h3":
+            return <h3 key={i} className="font-display text-xl text-olive md:text-2xl">{children}</h3>;
+          case "blockquote":
+            return <blockquote key={i} className="border-l-4 border-coral pl-5 font-display text-xl italic text-terracotta/70">{children}</blockquote>;
+          default:
+            return <p key={i} className="text-base leading-relaxed text-terracotta/85 md:text-lg">{children}</p>;
+        }
+      })}
     </div>
   );
 }
