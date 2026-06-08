@@ -87,7 +87,7 @@ export function ResourceCard({ resource }: Props) {
         ) : (
           <p className="mt-auto flex items-center gap-1.5 text-xs text-terracotta/40">
             <Clock size={11} />
-            Available when the book launches
+            Coming Soon
           </p>
         )}
       </div>
