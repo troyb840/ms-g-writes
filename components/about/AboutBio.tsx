@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { RichText } from "@/components/shared/RichText";
+import { assetPath } from "@/lib/assetPath";
 
-const FALLBACK_PORTRAIT = "/genicia.jpg";
+const FALLBACK_PORTRAIT = assetPath("/genicia.jpg");
 
 const FALLBACK_BIO = [
   {

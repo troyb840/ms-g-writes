@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
+import { assetPath } from "@/lib/assetPath";
 
 type HeroProps = {
   publicName?: string;
@@ -13,7 +14,7 @@ type HeroProps = {
   shortIntro?: string;
 };
 
-const FALLBACK_PORTRAIT = "/genicia.jpg";
+const FALLBACK_PORTRAIT = assetPath("/genicia.jpg");
 
 const DEFAULT_INTRO = [
   "Welcome, friend! I'm Genicia, or Ms. G to the little ones, and I believe with my whole heart that the right story at the right moment can change a child's life.",

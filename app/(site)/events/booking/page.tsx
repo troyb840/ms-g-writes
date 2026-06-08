@@ -56,7 +56,7 @@ export default function BookingPage() {
                   aria-label="Preview speaker one-sheet (opens PDF)"
                 >
                   <Image
-                    src="/ms-g-speaker-one-sheet-preview.jpg"
+                    src={assetPath("/ms-g-speaker-one-sheet-preview.jpg")}
                     alt="Ms. G Speaker One-Sheet preview — bio, speaking topics, and engagement details"
                     width={800}
                     height={1035}
