@@ -4,9 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { RichText } from "@/components/shared/RichText";
-import { assetPath } from "@/lib/assetPath";
-
-const FALLBACK_PORTRAIT = assetPath("/genicia.jpg");
+import portraitImg from "@/public/genicia.jpg";
 
 const FALLBACK_BIO = [
   {
@@ -50,7 +48,7 @@ type Props = {
 
 export function AboutBio({ author }: Props) {
   const legalName = author?.legalName ?? "Genicia Corney";
-  const photoUrl = FALLBACK_PORTRAIT;
+  const photoUrl = portraitImg;
   const bio = author?.fullBio?.length ? author.fullBio : FALLBACK_BIO;
 
   return (

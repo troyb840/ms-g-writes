@@ -3,6 +3,7 @@ import { Heart, CalendarHeart, Download, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { assetPath } from "@/lib/assetPath";
+import speakerPreviewImg from "@/public/ms-g-speaker-one-sheet-preview.jpg";
 
 export const metadata = { title: "Book Ms. G · MsGwrites.com" };
 
@@ -56,7 +57,7 @@ export default function BookingPage() {
                   aria-label="Preview speaker one-sheet (opens PDF)"
                 >
                   <Image
-                    src={assetPath("/ms-g-speaker-one-sheet-preview.jpg")}
+                    src={speakerPreviewImg}
                     alt="Ms. G Speaker One-Sheet preview — bio, speaking topics, and engagement details"
                     width={800}
                     height={1035}

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { assetPath } from "@/lib/assetPath";
+import portraitImg from "@/public/genicia.jpg";
 
 type HeroProps = {
   publicName?: string;
@@ -13,8 +13,6 @@ type HeroProps = {
   photo?: any; // Sanity image
   shortIntro?: string;
 };
-
-const FALLBACK_PORTRAIT = assetPath("/genicia.jpg");
 
 const DEFAULT_INTRO = [
   "Welcome, friend! I'm Genicia, or Ms. G to the little ones, and I believe with my whole heart that the right story at the right moment can change a child's life.",
@@ -29,7 +27,7 @@ export function Hero({
   photo,
   shortIntro,
 }: HeroProps) {
-  const photoUrl = FALLBACK_PORTRAIT;
+  const photoUrl = portraitImg;
 
   const paragraphs = shortIntro
     ? shortIntro
