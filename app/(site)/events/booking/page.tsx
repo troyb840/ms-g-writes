@@ -47,40 +47,29 @@ export default function BookingPage() {
             </ul>
 
             {/* Speaker one-sheet preview + download */}
-            <div className="mt-8 overflow-hidden rounded-card border border-coral/20 bg-peach-50 shadow-warm">
-              {/* Preview thumbnail */}
-              <div className="relative w-full overflow-hidden border-b border-coral/10 bg-peach-100">
+            <div className="mt-8 overflow-hidden rounded-card border border-coral/20 shadow-warm">
+              {/* Preview image with download button overlaid top-right */}
+              <div className="relative w-full">
                 <a
                   href={assetPath("/ms-g-speaker-one-sheet.pdf")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Preview speaker one-sheet (opens PDF)"
+                  aria-label="View speaker one-sheet PDF"
                 >
                   <Image
                     src={speakerPreviewImg}
                     alt="Ms. G Speaker One-Sheet preview — bio, speaking topics, and engagement details"
                     width={800}
                     height={1035}
-                    className="h-auto w-full transition-opacity duration-200 hover:opacity-90"
+                    className="h-auto w-full"
                   />
                 </a>
-              </div>
 
-              {/* Label + download button */}
-              <div className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center">
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-coral/10">
-                    <Download size={16} className="text-coral" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-terracotta">Ms. G — Speaker One-Sheet</p>
-                    <p className="text-xs text-terracotta/55">Bio, topics, and experience — all in one page.</p>
-                  </div>
-                </div>
+                {/* Download button — overlaid top-right, matching the blank header space */}
                 <a
                   href={assetPath("/ms-g-speaker-one-sheet.pdf")}
                   download
-                  className="btn-primary shrink-0 py-2 text-xs"
+                  className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-pill bg-coral px-5 py-2.5 font-body text-xs font-semibold uppercase tracking-[0.15em] text-cream shadow-warm transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-400 hover:shadow-warm-lg sm:right-6 sm:top-6"
                 >
                   <Download size={13} />
                   Download PDF
