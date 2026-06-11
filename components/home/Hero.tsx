@@ -69,28 +69,24 @@ export function Hero({
             <p className="eyebrow">{tagline}</p>
           </motion.div>
 
-          <motion.p
-            className="font-display text-4xl text-terracotta md:text-5xl"
+          <motion.h1
+            className="flex flex-wrap items-baseline gap-x-3"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
           >
-            Hi, I&apos;m
-          </motion.p>
-
-          <motion.h1
-            className="font-script text-6xl leading-none text-coral md:text-7xl lg:text-8xl"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-          >
-            {publicName}
+            <span className="font-display text-4xl text-terracotta md:text-5xl">
+              Hi, I&apos;m
+            </span>
+            <span className="font-script text-6xl leading-none text-coral md:text-7xl lg:text-8xl">
+              {publicName}
+            </span>
           </motion.h1>
         </div>
 
         {/* ── BLOCK 2: Photo ───────────────────────────────────────────────
             Mobile: middle  |  Desktop: right col spanning both rows       */}
-        <div className="order-2 md:col-start-2 md:row-start-1 md:row-span-2">
+        <div className="order-2 mb-14 md:col-start-2 md:row-start-1 md:row-span-2 md:mb-0">
           <motion.div
             className="relative mx-auto aspect-[4/5] max-w-[280px] sm:max-w-sm md:max-w-xl"
             initial={{ opacity: 0, scale: 0.96 }}
@@ -100,7 +96,7 @@ export function Hero({
             <svg className="absolute h-0 w-0" aria-hidden>
               <defs>
                 <clipPath id="hero-frame" clipPathUnits="objectBoundingBox">
-                  <path d="M 0.12 0.133 C 0.06 0.2, 0.04 0.333, 0.1 0.45 C 0.06 0.567, 0.08 0.7, 0.18 0.783 C 0.26 0.883, 0.44 0.9, 0.58 0.85 C 0.72 0.9, 0.9 0.85, 0.94 0.733 C 0.98 0.6, 0.94 0.483, 0.88 0.4 C 0.94 0.283, 0.86 0.15, 0.72 0.1 C 0.56 0.05, 0.36 0.067, 0.24 0.1 C 0.19 0.108, 0.15 0.117, 0.12 0.133 Z" />
+                  <path d="M 0.50 0.04 C 0.59 -0.01 0.70 0.03 0.72 0.12 C 0.81 0.08 0.91 0.14 0.90 0.24 C 0.99 0.26 1.02 0.38 0.95 0.45 C 1.02 0.52 0.99 0.64 0.91 0.66 C 0.96 0.75 0.91 0.87 0.81 0.88 C 0.83 0.96 0.71 1.01 0.61 0.97 C 0.57 1.02 0.45 1.01 0.41 0.97 C 0.29 1.01 0.17 0.96 0.19 0.88 C 0.09 0.87 0.04 0.75 0.09 0.66 C 0.01 0.64 -0.02 0.52 0.05 0.45 C -0.02 0.38 0.01 0.26 0.10 0.24 C 0.09 0.14 0.19 0.08 0.28 0.12 C 0.30 0.03 0.41 -0.01 0.50 0.04 Z" />
                 </clipPath>
               </defs>
             </svg>
@@ -112,9 +108,9 @@ export function Hero({
               style={{ clipPath: "url(#hero-frame)" }}
             />
 
-            {/* Photo clipped to same shape */}
+            {/* Photo clipped to same shape — thinner inset = thinner border */}
             <div
-              className="absolute inset-[4%]"
+              className="absolute inset-[2%]"
               style={{ clipPath: "url(#hero-frame)" }}
             >
               <Image
@@ -131,6 +127,10 @@ export function Hero({
             <Heart aria-hidden size={28} fill="currentColor" className="absolute -left-2 top-6 -rotate-12 text-coral-300" />
             <Heart aria-hidden size={36} fill="currentColor" className="absolute -right-2 bottom-12 rotate-12 text-coral-300" />
             <Heart aria-hidden size={20} fill="currentColor" className="absolute right-12 top-4 rotate-6 text-coral-200" />
+
+            {/* Thought-bubble trail — two circles below the cloud */}
+            <div aria-hidden className="absolute -bottom-7 left-[16%] h-6 w-6 rounded-full bg-terracotta-400" />
+            <div aria-hidden className="absolute -bottom-14 left-[9%] h-3.5 w-3.5 rounded-full bg-terracotta-400" />
           </motion.div>
         </div>
 
