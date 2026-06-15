@@ -114,39 +114,43 @@ export function Newsletter({ intro, convertKitFormId }: NewsletterProps) {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+                  className="flex flex-col gap-3"
                 >
-                  <label htmlFor="nl-name" className="sr-only">
-                    First name
-                  </label>
-                  <input
-                    id="nl-name"
-                    type="text"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    className="flex-1 rounded-pill border border-cream/20 bg-terracotta-500/40 px-5 py-3 text-sm text-cream placeholder:text-cream/55 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/40"
-                  />
-                  <label htmlFor="nl-email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="nl-email"
-                    type="email"
-                    placeholder="Email Address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="flex-1 rounded-pill border border-cream/20 bg-terracotta-500/40 px-5 py-3 text-sm text-cream placeholder:text-cream/55 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/40"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center gap-2 rounded-pill bg-coral px-6 py-3 font-body text-xs font-semibold uppercase tracking-[0.15em] text-cream shadow-warm transition-all duration-300 hover:-translate-y-0.5 hover:bg-coral-400 hover:shadow-warm-lg"
-                  >
-                    Join the Community
-                    <Heart size={13} fill="currentColor" />
-                  </button>
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <label htmlFor="nl-name" className="sr-only">
+                      First name
+                    </label>
+                    <input
+                      id="nl-name"
+                      type="text"
+                      placeholder="First Name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                      className="flex-1 rounded-pill border border-cream/20 bg-terracotta-500/40 px-5 py-3 text-sm text-cream placeholder:text-cream/55 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/40"
+                    />
+                    <label htmlFor="nl-email" className="sr-only">
+                      Email address
+                    </label>
+                    <input
+                      id="nl-email"
+                      type="email"
+                      placeholder="Email Address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="flex-1 rounded-pill border border-cream/20 bg-terracotta-500/40 px-5 py-3 text-sm text-cream placeholder:text-cream/55 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral/40"
+                    />
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center gap-2 rounded-pill bg-coral px-8 py-3 font-body text-xs font-semibold uppercase tracking-[0.15em] text-cream shadow-warm transition-all duration-300 hover:-translate-y-0.5 hover:bg-coral-400 hover:shadow-warm-lg"
+                    >
+                      Join the Community
+                      <Heart size={13} fill="currentColor" />
+                    </button>
+                  </div>
                 </form>
               )}
 
