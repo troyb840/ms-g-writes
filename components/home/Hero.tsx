@@ -88,7 +88,7 @@ export function Hero({
             Mobile: middle  |  Desktop: right col spanning both rows       */}
         <div className="order-2 mb-10 md:col-start-2 md:row-start-1 md:row-span-2 md:mb-0">
           <motion.div
-            className="relative mx-auto aspect-[4/5] max-w-[240px] sm:max-w-[280px] md:max-w-sm"
+            className="relative mx-auto aspect-[4/5] max-w-[240px] sm:max-w-[280px] md:max-w-lg"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
