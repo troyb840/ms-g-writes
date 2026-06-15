@@ -49,36 +49,36 @@ export function Newsletter({ intro, convertKitFormId }: NewsletterProps) {
       id="newsletter"
       className="relative scroll-mt-20 overflow-hidden bg-terracotta-400 text-cream"
     >
-      {/* Decorative scattered hearts (coral substituting for the reference's gold) */}
+      {/* Decorative hearts — pinned to true corners so they never overlap content */}
       <Heart
         aria-hidden
-        size={36}
+        size={30}
         fill="currentColor"
-        className="absolute left-6 top-10 -rotate-12 text-coral-300/50 md:left-12"
+        className="absolute left-3 top-3 -rotate-12 text-coral-300/50"
+      />
+      <Heart
+        aria-hidden
+        size={24}
+        fill="currentColor"
+        className="absolute left-3 bottom-3 rotate-6 text-coral-200/40"
       />
       <Heart
         aria-hidden
         size={28}
         fill="currentColor"
-        className="absolute left-20 bottom-8 rotate-6 text-coral-200/40"
+        className="absolute right-3 bottom-3 -rotate-6 text-coral-300/50"
       />
       <Heart
         aria-hidden
-        size={32}
+        size={20}
         fill="currentColor"
-        className="absolute right-6 bottom-10 -rotate-6 text-coral-300/50 md:right-12"
-      />
-      <Heart
-        aria-hidden
-        size={22}
-        fill="currentColor"
-        className="absolute right-20 top-12 rotate-12 text-coral-200/40"
+        className="absolute right-3 top-3 rotate-12 text-coral-200/40"
       />
 
-      <div className="section-container relative py-section-sm">
+      <div className="section-container relative py-16">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-12">
           {/* Left: copy */}
-          <div className="pt-6 pr-16 md:col-span-5 md:pr-0 md:pt-0">
+          <div className="pr-16 md:col-span-5 md:pr-0">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
