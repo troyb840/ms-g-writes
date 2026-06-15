@@ -110,7 +110,7 @@ export function Hero({
 
             {/* Photo clipped to same shape — thinner inset = thinner border */}
             <div
-              className="absolute inset-[2%]"
+              className="absolute inset-[1%]"
               style={{ clipPath: "url(#hero-frame)" }}
             >
               <Image
