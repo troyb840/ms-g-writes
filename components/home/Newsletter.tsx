@@ -78,7 +78,7 @@ export function Newsletter({ intro, convertKitFormId }: NewsletterProps) {
       <div className="section-container relative py-section-sm">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-12">
           {/* Left: copy */}
-          <div className="pr-16 md:col-span-5 md:pr-0">
+          <div className="pt-6 pr-16 md:col-span-5 md:pr-0 md:pt-0">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
