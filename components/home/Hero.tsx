@@ -86,9 +86,9 @@ export function Hero({
 
         {/* ── BLOCK 2: Photo ───────────────────────────────────────────────
             Mobile: middle  |  Desktop: right col spanning both rows       */}
-        <div className="order-2 mb-24 md:col-start-2 md:row-start-1 md:row-span-2 md:mb-0">
+        <div className="order-2 mb-10 md:col-start-2 md:row-start-1 md:row-span-2 md:mb-0">
           <motion.div
-            className="relative mx-auto aspect-[4/5] max-w-[280px] sm:max-w-sm md:max-w-xl"
+            className="relative mx-auto aspect-[4/5] max-w-[240px] sm:max-w-[280px] md:max-w-sm"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
@@ -96,7 +96,7 @@ export function Hero({
             <svg className="absolute h-0 w-0" aria-hidden>
               <defs>
                 <clipPath id="hero-frame" clipPathUnits="objectBoundingBox">
-                  <path d="M 0.50 0.04 C 0.59 -0.01 0.70 0.03 0.72 0.12 C 0.81 0.08 0.91 0.14 0.90 0.24 C 0.99 0.26 1.02 0.38 0.95 0.45 C 1.02 0.52 0.99 0.64 0.91 0.66 C 0.96 0.75 0.91 0.87 0.81 0.88 C 0.83 0.96 0.71 1.01 0.61 0.97 C 0.57 1.02 0.45 1.01 0.41 0.97 C 0.29 1.01 0.17 0.96 0.19 0.88 C 0.09 0.87 0.04 0.75 0.09 0.66 C 0.01 0.64 -0.02 0.52 0.05 0.45 C -0.02 0.38 0.01 0.26 0.10 0.24 C 0.09 0.14 0.19 0.08 0.28 0.12 C 0.30 0.03 0.41 -0.01 0.50 0.04 Z" />
+                  <path d="M 0.12 0.0 C 0.04 0.0 0.0 0.04 0.0 0.12 L 0.0 0.74 C 0.0 0.82 0.04 0.86 0.12 0.86 L 0.13 0.86 C 0.08 0.92 0.02 0.97 0.04 1.0 C 0.09 0.97 0.22 0.89 0.30 0.86 L 0.88 0.86 C 0.96 0.86 1.0 0.82 1.0 0.74 L 1.0 0.12 C 1.0 0.04 0.96 0.0 0.88 0.0 Z" />
                 </clipPath>
               </defs>
             </svg>
@@ -128,9 +128,6 @@ export function Hero({
             <Heart aria-hidden size={36} fill="currentColor" className="absolute -right-2 bottom-12 rotate-12 text-coral-300" />
             <Heart aria-hidden size={20} fill="currentColor" className="absolute right-12 top-4 rotate-6 text-coral-200" />
 
-            {/* Thought-bubble trail — two circles below the cloud */}
-            <div aria-hidden className="absolute -bottom-7 left-[16%] h-6 w-6 rounded-full bg-terracotta-400" />
-            <div aria-hidden className="absolute -bottom-14 left-[9%] h-3.5 w-3.5 rounded-full bg-terracotta-400" />
           </motion.div>
         </div>
 
