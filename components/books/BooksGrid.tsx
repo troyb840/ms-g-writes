@@ -62,7 +62,11 @@ export function BooksGrid({ books }: Props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className={
+            filtered.length === 1
+              ? "mx-auto grid max-w-md grid-cols-1"
+              : "grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          }
         >
           {filtered.length > 0 ? (
             filtered.map((book) => <BookCard key={book._id} book={book} />)
