@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { NewReleaseBanner } from "@/components/home/NewReleaseBanner";
 import { FeaturedBook } from "@/components/home/FeaturedBook";
 import { ResourcesTeaser } from "@/components/home/ResourcesTeaser";
 import { EventsTeaser } from "@/components/home/EventsTeaser";
@@ -9,6 +10,7 @@ import { QuoteCallout } from "@/components/home/QuoteCallout";
 export default function HomePage() {
   return (
     <main>
+      <NewReleaseBanner />
       <Hero />
       <FeaturedBook />
       <ResourcesTeaser />
