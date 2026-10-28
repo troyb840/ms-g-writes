@@ -96,7 +96,7 @@ export function BookCard({ book }: Props) {
         )}
 
         <Link
-          href={`/books/${book.slug}`}
+          href={book.status === "available" ? `/books/${book.slug}#buy` : `/books/${book.slug}`}
           className="link-arrow mt-auto text-sm"
         >
           {book.status === "available" ? (
