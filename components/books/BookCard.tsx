@@ -3,17 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag } from "lucide-react";
-
-export type BookCardData = {
-  _id: string;
-  title: string;
-  subtitle?: string;
-  slug: string;
-  audience: string;
-  status: "coming-soon" | "preorder" | "available";
-  cover?: any;
-  shortDescription?: string;
-};
+import type { Book } from "@/lib/books";
 
 const AUDIENCE_LABELS: Record<string, string> = {
   "children-6-8": "Ages 6–8",
@@ -33,31 +23,15 @@ const STATUS_CONFIG = {
   },
   available: {
     label: "Available",
-    classes: "bg-coral/15 text-coral",
+    classes: "bg-coral text-cream shadow-warm",
   },
 };
 
-// Placeholder book used when Sanity has no books yet
-export const PLACEHOLDER_BOOKS: BookCardData[] = [
-  {
-    _id: "placeholder-1",
-    title: "A Home to Call Their Own",
-    subtitle: "A Tale of Trusting God",
-    slug: "a-home-to-call-their-own",
-    audience: "children-6-8",
-    status: "coming-soon",
-    shortDescription:
-      "A picture book about a child finding shelter and trust in places that don't always look like home.",
-  },
-];
-
 type Props = {
-  book: BookCardData;
+  book: Book;
 };
 
 export function BookCard({ book }: Props) {
-  const coverUrl = null; // populated when image data is available
-
   const statusCfg = STATUS_CONFIG[book.status] ?? STATUS_CONFIG["coming-soon"];
   const audienceLabel = AUDIENCE_LABELS[book.audience] ?? book.audience;
 
@@ -65,13 +39,15 @@ export function BookCard({ book }: Props) {
     <article className="card-warm group flex flex-col overflow-hidden">
       {/* Cover */}
       <Link href={`/books/${book.slug}`} className="block">
-        <div className="relative aspect-[3/4] w-full overflow-hidden bg-peach-200">
-          {coverUrl ? (
+        <div
+          className={`relative w-full overflow-hidden bg-peach-200 ${book.cover ? "" : "aspect-[3/4]"}`}
+        >
+          {book.cover ? (
+            // Natural aspect ratio — covers may be portrait or landscape
             <Image
-              src={coverUrl}
-              alt={book.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              src={book.cover}
+              alt={`${book.title} cover`}
+              className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 80vw"
             />
           ) : (

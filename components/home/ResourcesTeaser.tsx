@@ -27,7 +27,7 @@ export function ResourcesTeaser() {
           >
             <p className="eyebrow mb-4">Free Resources</p>
             <h2 className="font-display text-display-md text-olive md:text-display-lg">
-              You don&apos;t have to wait for the book.
+              Keep the story going at home.
             </h2>
 
             {/* Decorative underline */}
@@ -38,10 +38,10 @@ export function ResourcesTeaser() {
 
             <div className="mt-6 space-y-4 text-base leading-relaxed text-terracotta/80">
               <p>
-                While the book is being finished, Genicia is already creating free,
-                faith-centered resources for families, educators, community and ministry
-                leaders — because the work of putting God&apos;s Word in front of children
-                doesn&apos;t wait.
+                Alongside the book, Genicia is creating free, faith-centered resources
+                for families, educators, community and ministry leaders — because the
+                work of putting God&apos;s Word in front of children doesn&apos;t stop at
+                the last page.
               </p>
               <p>
                 Free printables, Bible verse cards, discussion guides, and more are coming

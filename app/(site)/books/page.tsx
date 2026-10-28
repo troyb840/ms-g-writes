@@ -1,5 +1,6 @@
 import { Heart, BookOpen } from "lucide-react";
 import { BooksGrid } from "@/components/books/BooksGrid";
+import { BOOKS } from "@/lib/books";
 
 export const metadata = {
   title: "Books",
@@ -33,10 +34,10 @@ export default function BooksPage() {
         </div>
       </section>
 
-      {/* Book grid — shows placeholder cards */}
+      {/* Book grid */}
       <section className="py-section">
         <div className="section-container">
-          <BooksGrid books={[]} />
+          <BooksGrid books={BOOKS} />
         </div>
       </section>
 

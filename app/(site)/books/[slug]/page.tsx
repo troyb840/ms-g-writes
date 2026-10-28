@@ -1,20 +1,22 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
-import { Heart, ChevronLeft } from "lucide-react";
+import { Heart, ChevronLeft, ShoppingBag } from "lucide-react";
+import { BOOKS } from "@/lib/books";
+import { LuluBuyButton } from "@/components/books/LuluBuyButton";
 
 export function generateStaticParams() {
-  return [{ slug: "a-home-to-call-their-own" }];
+  return BOOKS.map((b) => ({ slug: b.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (slug === "a-home-to-call-their-own") {
-    return {
-      title: "A Home to Call Their Own · MsGwrites.com",
-      description: "A picture book about a child finding shelter and trust in places that don't always look like home.",
-    };
-  }
-  return {};
+  const book = BOOKS.find((b) => b.slug === slug);
+  if (!book) return {};
+  return {
+    title: `${book.title} · MsGwrites.com`,
+    description: book.shortDescription,
+  };
 }
 
 const AUDIENCE_LABELS: Record<string, string> = {
@@ -27,7 +29,7 @@ const AUDIENCE_LABELS: Record<string, string> = {
 const STATUS_CONFIG = {
   "coming-soon": { label: "Coming Soon", classes: "bg-peach-200 text-terracotta/70" },
   preorder: { label: "Pre-Order Now", classes: "bg-olive/15 text-olive" },
-  available: { label: "Available Now", classes: "bg-coral/15 text-coral" },
+  available: { label: "Available Now", classes: "bg-coral text-cream shadow-warm" },
 };
 
 export default async function BookDetailPage({
@@ -36,28 +38,11 @@ export default async function BookDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const book = BOOKS.find((b) => b.slug === slug);
+  if (!book) notFound();
 
-  // Only the debut book page is pre-rendered; everything else 404s until data is added
-  if (slug !== "a-home-to-call-their-own") notFound();
-
-  const displayBook = {
-    title: "A Home to Call Their Own",
-    subtitle: "A Tale of Trusting God",
-    audience: "children-6-8",
-    status: "coming-soon",
-    shortDescription:
-      "A picture book about a child finding shelter and trust in places that don't always look like home.",
-    fullDescription: null,
-    samplePages: null,
-    buyLinks: null,
-    linkedResources: null,
-  };
-
-  const coverUrl = null;
-
-  const statusCfg =
-    STATUS_CONFIG[displayBook.status as keyof typeof STATUS_CONFIG] ??
-    STATUS_CONFIG["coming-soon"];
+  const statusCfg = STATUS_CONFIG[book.status] ?? STATUS_CONFIG["coming-soon"];
+  const canBuy = book.status !== "coming-soon" && !!book.luluBuyButtonId;
 
   return (
     <main>
@@ -77,19 +62,29 @@ export default async function BookDetailPage({
       {/* Hero — cover + meta */}
       <section className="py-section">
         <div className="section-container">
-          <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-12 md:gap-16">
+          <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-16">
             {/* Cover */}
-            <div className="md:col-span-4 lg:col-span-4">
-              <div className="relative mx-auto max-w-xs">
+            <div className="md:col-span-6">
+              <div className="relative mx-auto max-w-xl">
                 {/* Offset shadow */}
                 <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-card bg-peach-200" />
-                <div className="relative aspect-[3/4] overflow-hidden rounded-card bg-peach-100">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
-                    <Heart size={40} fill="currentColor" className="text-coral-300/50" />
-                    <p className="font-display text-sm italic text-terracotta/50">
-                      Cover Coming Soon
-                    </p>
-                  </div>
+                <div className="relative overflow-hidden rounded-card bg-peach-100 shadow-warm-lg">
+                  {book.cover ? (
+                    <Image
+                      src={book.cover}
+                      alt={`${book.title} cover`}
+                      priority
+                      className="h-auto w-full"
+                      sizes="(min-width: 768px) 45vw, 90vw"
+                    />
+                  ) : (
+                    <div className="flex aspect-[3/4] flex-col items-center justify-center gap-4 p-8 text-center">
+                      <Heart size={40} fill="currentColor" className="text-coral-300/50" />
+                      <p className="font-display text-sm italic text-terracotta/50">
+                        Cover Coming Soon
+                      </p>
+                    </div>
+                  )}
                   {/* Status badge */}
                   <div className="absolute left-3 top-3">
                     <span
@@ -103,39 +98,47 @@ export default async function BookDetailPage({
             </div>
 
             {/* Info */}
-            <div className="md:col-span-8 lg:col-span-8">
+            <div className="md:col-span-6">
               <p className="eyebrow mb-3 text-coral/70">
-                {AUDIENCE_LABELS[displayBook.audience] ?? displayBook.audience}
+                {AUDIENCE_LABELS[book.audience] ?? book.audience}
               </p>
 
               <h1 className="font-display text-3xl text-olive md:text-4xl lg:text-5xl">
-                {displayBook.title}
+                {book.title}
               </h1>
 
-              {displayBook.subtitle && (
+              {book.subtitle && (
                 <p className="mt-2 font-display text-lg italic text-terracotta/60">
-                  {displayBook.subtitle}
+                  {book.subtitle}
                 </p>
               )}
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-terracotta/80">
-                {displayBook.shortDescription}
+              <p className="mt-4 text-sm text-terracotta/60">
+                By Genicia Corney
+                {book.illustrator && <> · Illustrated by {book.illustrator}</>}
               </p>
 
-              {/* Buy links — coming soon */}
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-terracotta/80">
+                {book.shortDescription}
+              </p>
+
               <div className="mt-8">
-                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-terracotta/50">
-                  Where to Buy
-                </p>
-                <div className="inline-flex items-center gap-2 rounded-pill border border-terracotta/20 px-5 py-2.5 text-sm text-terracotta/40">
-                  <Heart size={12} fill="currentColor" className="text-coral-200" />
-                  Buy links coming soon
-                </div>
+                {canBuy ? (
+                  <a href="#buy" className="btn-primary">
+                    <ShoppingBag size={14} />
+                    Get Your Copy
+                  </a>
+                ) : (
+                  <div className="inline-flex items-center gap-2 rounded-pill border border-terracotta/20 px-5 py-2.5 text-sm text-terracotta/40">
+                    <Heart size={12} fill="currentColor" className="text-coral-200" />
+                    Buy links coming soon
+                  </div>
+                )}
               </div>
 
               {/* Newsletter nudge */}
               <p className="mt-8 text-sm text-terracotta/55">
-                Want to be first to know when it's available?{" "}
+                Want to hear about new books and events first?{" "}
                 <Link
                   href="/#newsletter"
                   className="text-coral underline underline-offset-2 hover:text-coral-400"
@@ -148,6 +151,22 @@ export default async function BookDetailPage({
         </div>
       </section>
 
+      {/* Purchase — Lulu buy button */}
+      {canBuy && (
+        <section id="buy" className="panel-cream-warm scroll-mt-24 py-section-sm">
+          <div className="section-container">
+            <div className="mb-8 text-center">
+              <p className="font-script text-3xl text-coral">Bring it home</p>
+              <h2 className="mt-1 font-display text-2xl text-olive md:text-3xl">
+                Get Your Copy
+              </h2>
+            </div>
+            <div className="mx-auto max-w-4xl">
+              <LuluBuyButton buyButtonId={book.luluBuyButtonId!} />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Bottom CTA */}
       <section className="panel-peach py-16 text-center">

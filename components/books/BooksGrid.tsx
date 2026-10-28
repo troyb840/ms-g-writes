@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookCard, type BookCardData, PLACEHOLDER_BOOKS } from "./BookCard";
+import { BookCard } from "./BookCard";
+import type { Book } from "@/lib/books";
 
 const TABS = [
   { value: "all", label: "All Books" },
@@ -13,13 +14,13 @@ const TABS = [
 ];
 
 type Props = {
-  books: BookCardData[];
+  books: Book[];
 };
 
 export function BooksGrid({ books }: Props) {
   const [activeTab, setActiveTab] = useState("all");
 
-  const displayBooks = books.length > 0 ? books : PLACEHOLDER_BOOKS;
+  const displayBooks = books;
 
   const filtered =
     activeTab === "all"
